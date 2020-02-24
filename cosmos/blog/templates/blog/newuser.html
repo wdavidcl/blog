@@ -1,0 +1,80 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <section class="dashboard-wrap mtb-40">
+    	<div class="container">
+            <div class="body-content">
+        		<div class="row">
+        			<div class="col-md-3">
+                        <div class="dash-left">
+                            <ul>
+                                <li class="active"><a href="admindashboard">Dashboard</a></li>
+                                <li><a href="admin-blog-list">Articles</a></li>
+								<li><a href="newuser" class="active">Users</a></li>
+								<li><a href="comment">Accept Or Remove Comment</a></li>
+                                <li><a href="login">Logout</a></li>
+                            </ul>
+                        </div>   
+                    </div>
+                    <div class="col-md-9">
+                        <div class="dash-right">
+                            <div class="dash-header">
+                                <div class="dash-title">
+                                    <h1>Users</h1>
+                                </div>
+                            </div>
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Email</th>
+                                    <th>Current role</th>
+                                    <th>Select role</th>
+                                    <!--th>Delete User</th-->
+                                </tr>
+                                {% for user in users%}
+                                <tr>
+
+								    <td>{{user.name}} {{user.lastname}}</td>
+                                    <td>{{user.email}}</td>
+                                    {% if user.access == 0 %}
+                                        <td>No authorized yet</td>
+                                    {% elif user.access == 1 %}
+                                        <td>User</td>
+                                    {% elif user.access == 2 %}
+                                        <td>Author</td>
+                                    {% elif user.access == 3 %}
+                                        <td>Admin</td>
+                                    {% endif %}
+                                    <td>
+                                        {% if user.role == user.access: %}
+                                            <a href="/api/user?id={{user.id}}" class="btn btn-info btn-sm">User</a>
+                                            <a href="/api/author?id={{user.id}}" class="btn btn-info btn-sm">Author</a>
+                                            <a href="/api/admin?id={{user.id}}" class="btn btn-info btn-sm">Admin</a>
+                                        {% else: %}
+                                            <a href="/api/user?id={{user.id}}" class="btn btn-info btn-sm">User</a>
+                                            <a href="/api/author?id={{user.id}}" class="btn btn-info btn-sm">Author</a>
+                                            <a href="/api/admin?id={{user.id}}" class="btn btn-info btn-sm">Admin</a>
+                                            <a href="/api/delete?id={{user.id}}" class="btn btn-danger btn-sm">Reject</a>
+                                            {% if user.role == 1: %}
+                                                <td bgcolor="#FF0000">wants to become an User</td>
+                                            {% elif user.role == 2: %}
+                                                <td bgcolor="#FF0000">wants to become an Author</td>
+                                            {% elif user.role == 3: %}
+                                                <td bgcolor="#FF0000">wants to become an Admin</td>
+                                            {% endif%}
+                                        {% endif%}
+                                    </td>
+                                </tr>
+                                {%endfor%}
+                            </table>
+                        </div>   
+                    </div>
+        		</div>
+            </div>
+    	</div>
+    </section>
+
+  {% endblock content %}

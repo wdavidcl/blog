@@ -1,0 +1,28 @@
+
+<!doctype html>
+<html lang="en">
+
+
+{% include 'header.html' %}
+
+{% include 'navbar.html' %}
+
+
+
+ <body>
+
+        <div style="padding:60px 5px 0px 5px">
+        <main>
+              {% block content %}{% endblock %}
+        </main>
+
+
+{% include 'footer.html' %}
+
+       <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+  </body>
+</html>

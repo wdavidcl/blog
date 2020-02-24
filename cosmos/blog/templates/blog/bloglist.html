@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+    <section class="blog-list mtb-40">
+      <div class="container">
+        <h1>Articles: {{order_tag}}</h1>
+        <div class="row">
+            {% for article in articles.items%}
+              <div class="col-md-4">
+					<div class="blog-box">
+						<img src="assets/images/uploads/img{{article.id_article}}.jpg" alt="blog1" />
+						<h3>{{article.title}}</h3>
+						<h6>{{article.tags.replace(';',', ')}}</h6>
+						<p>by <span>{{article.author}}</span> on <span>{{article.timestamp.strftime("%m/%d/%Y %H:%M:%S")}}</span></p>
+						<p>{{article.article[:article.article.find('.')+1]}}</p>
+						<a href="detail?id={{article.id_article}}" class="btn btn-danger">Read more...</a>
+					</div>
+              </div>
+            {%endfor %}
+        </div>
+			{% for page_num in articles.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current = 1) %}
+				{% if page_num %}
+					{% if articles.page == page_num %}
+						<a class="btn btn-info mb-4" href="{{ url_for('bloglist', page = page_num,tag=order_tag) }}">{{page_num}}</a>
+					{% else %}
+						<a class="btn btn-outline-info mb-4" href="{{ url_for('bloglist', page = page_num,tag=order_tag) }}">{{page_num}}</a>
+					{% endif %}
+				{% else %}
+					...
+				{% endif %}
+			{% endfor %}
+      </div>
+    </section>
+
+  {% endblock content %}

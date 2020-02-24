@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <section class="cmspage mtb-40">
+
+    <div class="container">
+
+        <form action="/api/edit_post?id={{article.id_article}}" method="post">
+          <div class="form-group">
+            <label for="title">Article title</label>
+            <input type="text" id="title" name="title" value="{{article.title}}" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="tags">Tags:</label>
+            <input type="text" id="tags" name="tags" value="{{article.tags}}" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="article">Content:</label>
+            <textarea id="article" name="article" class="form-control">{{article.article}}</textarea>
+          </div>
+            <div class="detail-img">
+    					   <img class="center-fit" src="/assets/images/uploads/img{{article.id_article}}.jpg" alt="blog1" />
+                        </div>
+            <div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" name="edit" value="Edit">Edit Picture</button>
+            </div>
+            <div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" name="edit" value="False">Keep the current image and Save</button>
+            </div>
+        </form>
+
+
+    </div> <!-- /container -->
+    </section>
+
+    {% endblock content %}

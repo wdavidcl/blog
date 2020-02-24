@@ -1,0 +1,62 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+    <section class="dashboard-wrap mtb-40">
+    	<div class="container">
+            <div class="body-content">
+        		<div class="row">
+        			<div class="col-md-3">
+                        <div class="dash-left">
+                            <ul>
+                                <li class="active"><a href="admindashboard">Dashboard</a></li>
+                                <li><a href="admin-blog-list" >Articles</a></li>
+								<li><a href="newuser">Users</a></li>
+								<li><a href="comment" class="active">Accept Or Remove Comment</a></li>
+                                <li><a href="logout">Logout</a></li>
+                            </ul>
+                        </div>   
+                    </div>
+                    <div class="col-md-9">
+                        <div class="dash-right">
+                            <div class="dash-header">
+                                <div class="dash-title">
+                                    <h1>New Comments</h1>
+                                </div>
+                                
+                            </div>
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <th>Comment author</th>
+                                    <th>Article URL</th>
+                                    <th>Comment</th>
+									<th>Approve</th>
+                                    <th>Remove</th>
+                                </tr>
+                                {% for comment in comments %}
+                                    <tr>
+                                    <td>{{comment.name}} {{comment.lastname}}</td>
+                                    <td>
+                                        <a href="/detail?id={{comment.id_article}}" class="btn btn-info btn-sm">Click here to read</a>
+                                    </td>
+                                    <td>
+                                        {{comment.comment}}
+                                    </td>
+                                    <td>
+                                        <a href="/api/accept_comment?id={{comment.id_comment}}" class="btn btn-info btn-sm">Accept</a>
+                                    </td>
+                                    <td>
+                                        <a href="/api/delete_comment?id={{comment.id_comment}}" class="btn btn-danger btn-sm">Reject</a>
+                                    </td>
+                                    </tr>
+                                {%endfor%}
+                            </table>
+                        </div>   
+                    </div>
+        		</div>
+            </div>
+    	</div>
+    </section>
+
+  {% endblock content %}

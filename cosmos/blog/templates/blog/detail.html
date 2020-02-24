@@ -1,0 +1,84 @@
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% extends "base.html" %}
+
+{% block content %}
+
+    <section class="blog-detail mtb-40">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-md-8">
+    				<div class="blog-left">
+                        <h1>{{article.title}}</h1>
+                        <div>
+                            <h6 align="center">{{article.tags.replace(';',', ')}}</h6>
+                        </div>
+                        <div class="posted-on">
+                            <p>by <span>{{user.name}} {{user.lastname}}</span> on <span>{{article.timestamp.strftime("%m/%d/%Y %H:%M:%S")}}</span></p>
+                        </div>
+                        <div class="detail-img">
+    					   <img class="center-fit" src="assets/images/uploads/img{{article.id_article}}.jpg" alt="blog1" />
+                        </div>
+                        <div class="blog-desc">
+        					<p>{{article.article}}</p>
+                        </div>
+    				</div>
+					<!------------container------->
+
+                    <div class="pt-5">
+                      <h3 class="mb-5">{{number}} Comments</h3>
+                      <ul class="comment-list">
+                        {% for comment in comments %}
+                          {% if comment.allow: %}
+                            <li class="comment">
+                                <div class="vcard">
+                                    <img src="assets/images/user.jpg" alt="Image placeholder">
+                                </div>
+                                <div class="comment-body">
+                                <h3>{{comment.name}} {{comment.lastname}}</h3>
+                                <div class="meta">{{comment.timestamp}}</div>
+                                <p>{{comment.comment}}</p>
+                                <!--p><a href="#" class="reply rounded">Reply</a></p-->
+                                </div>
+                            </li>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                      <!-- END comment-list -->
+
+                        <div class="comment-form-wrap pt-5">
+                            <h3 class="mb-5">Leave a comment {{data.name}} {{data.lastname}}</h3>
+                            <h5>{{message}}</h5>
+                            <form class="form-signin" method="POST" action="#">
+                              <div>{{ form.hidden_tag() }}</div>
+                              {% if logged: %}
+                                <div>{{ wtf.form_field(form.name__)    }}</div>
+                                <div>{{ wtf.form_field(form.lastname)    }}</div>
+                              {% endif %}
+                              <div>{{ wtf.form_field(form.comment__) }}</div>
+
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Comment</button>
+                            </form>
+                        </div>
+                    </div>
+    			</div>
+				
+    			<div class="col-md-4">
+    				<div class="blog-right">
+                         <div class="right-widget categories">
+                             <h3>Categories</h3>
+                             <ul>
+                                    <li><a href="/bloglist?tag=older">Oldest articles first</a></li>
+                                 {% for tag in tags%}
+                                    <li><a href="/bloglist?tag={{tag}}">{{tag}}</a></li>
+                                 {% endfor %}
+                            </ul>
+                         </div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+
+{% endblock content %}

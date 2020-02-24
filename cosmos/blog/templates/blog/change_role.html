@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+    <section class="cmspage mtb-40">
+
+    <div class="container">
+          <h1>{{name}} Please select your desired role</h1>
+
+        <div class="page-desc">
+            {% if level == 0: %}
+                <p>Your Actual level access is: No User Yet</p>
+            {% elif level == 1: %}
+                <p>Your Actual level access is: User</p>
+            {% elif level == 2: %}
+                <p>Your Actual level access is: Author</p>
+            {% elif level == 3: %}
+                <p>Your Actual level access is: Administrator</p>
+            {% endif%}
+        </div>
+        <div class="blog-form">
+            <form class="form-signin" method="POST" action="/change_role" enctype="multipart/form-data">
+                <select name="choice" id="choice">
+                    <option value="{{level}}" selected>Options</option>
+                    <option value="1">User</option>
+                    <option value="2">Author</option>
+                    <option value="3">Administrator</option>
+                </select>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Request</button>
+            </form>
+        </div>
+    </div>
+
+    </section>
+
+{% endblock content %}

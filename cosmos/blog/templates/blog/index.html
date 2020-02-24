@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <section class="banner">
+    	<div class="banner-box">
+    		<div class="intro-text">
+    			<div class="intro-text-box">
+		    		<h1>Welcome To Cosmos Infinity</h1>
+		    		<h3>Feel free to look around</h3>
+	    		</div>
+    		</div>
+    		<img src="assets/images/banner.jpg" alt="banner" />
+    	</div>
+    </section>
+    <section class="featured-blog mtb-40">
+    	<div class="container">
+    		<div class="row">
+				<div class="col-md-4">
+    				<div class="blog-right">
+
+                         <div class="right-widget categories">
+                             <h3>Categories</h3>
+                             <ul>
+                                    <li><a href="/bloglist?tag=older">Oldest articles first</a></li>
+                                 {% for tag in tags%}
+                                    <li><a href="/bloglist?tag={{tag}}">{{tag}}</a></li>
+                                 {% endfor %}
+                            </ul>
+                         </div>
+    				</div>
+    			</div>
+				{% for article in articles.items %}
+				<div class="col-md-4">
+					<div class="blog-box">
+						<img src="assets/images/uploads/img{{article.id_article}}.jpg" alt="blog1" />
+						<h3>{{article.title}}</h3>
+						<h6>{{article.tags.replace(';',', ')}}</h6>
+						<p>by <span>{{article.author}}</span> on <span>{{article.timestamp.strftime("%m/%d/%Y %H:%M:%S")}}</span></p>
+						<p>{{article.article[:article.article.find('.')+1]}}</p>
+						<a href="detail?id={{article.id_article}}" class="btn btn-danger">Read more...</a>
+					</div>
+				</div>
+				{% endfor %}
+    		</div>
+			{% for page_num in articles.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current = 1) %}
+				{% if page_num %}
+					{% if articles.page == page_num %}
+						<a class="btn btn-info mb-4" href="{{ url_for('index', page = page_num) }}">{{page_num}}</a>
+					{% else %}
+						<a class="btn btn-outline-info mb-4" href="{{ url_for('index', page = page_num) }}">{{page_num}}</a>
+					{% endif %}
+				{% else %}
+					...
+				{% endif %}
+			{% endfor %}
+
+		</div>
+    </section>
+  {% endblock content %}
